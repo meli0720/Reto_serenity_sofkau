@@ -5,11 +5,14 @@ import com.sofkau.tasks.AbrirPaginaWeb;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
+import net.serenitybdd.core.pages.WebElementFacade;
 import org.apache.log4j.Logger;
 import static com.sofkau.tasks.Loguearse.loguearse;
 import static com.sofkau.tasks.Mercar.mercar;
 import static com.sofkau.tasks.NavegarInicioSesion.navegarInicioSesion;
+import static com.sofkau.ui.PaginaMercado.BTN_CHULO;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+
 
 public class MercadoStepDefinitions extends Configuracion {
     public static org.apache.log4j.Logger LOGGER = Logger.getLogger(String.valueOf(MercadoStepDefinitions.class));
@@ -42,18 +45,22 @@ public class MercadoStepDefinitions extends Configuracion {
     public void agregoUnProductoAMiCarritoYContinuoTodoElFlujoDeLaCompra() {
         theActorInTheSpotlight().attemptsTo(
                 mercar()
-                        .ingresoElProductoAbuscar("avena")
-                        .creoElMensajeDeAnexo("por favor entregar a mi abuela Rosita Muñoz")
-                        .ingresoNombre("Romina Maria")
+                        .ingresoElProductoAbuscar("parmesano")
+                        .creoElMensajeDeAnexo("por favor entregar a mi abuela Rosita Acevedo")
+                        .ingresoNombre("Romina Melissa")
                         .ingresoApellido("Meneses")
                         .ingresoCedula("1000756214")
                         .ingresoTelefono("3127357860")
+                        .ingresoElDestinatario("Romina Meneses Sepulveda")
         );
 
     }
 
     @Entonces("deberia ver un mensaje de confirmacion de compra exitosa")
     public void deberiaVerUnMensajeDeConfirmacionDeCompraExitosa() {
+        WebElementFacade boton = BTN_CHULO.resolveFor(theActorInTheSpotlight());
+        boton.shouldBeVisible();
+        quitarDriver();
 
     }
 }
